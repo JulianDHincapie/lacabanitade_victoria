@@ -1,0 +1,12 @@
+.fondo {
+    width: 100%;
+    height: 100vh;
+    background: url("../images/cbnaaaa.jpg") top right;
+    background-size: cover;
+}
+.color {
+    background-color: rgba(0, 0, 0, 0.452);
+}
+.colorr {
+    color: #34b7a7;
+}
