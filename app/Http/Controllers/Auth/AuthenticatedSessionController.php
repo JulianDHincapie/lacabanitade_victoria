@@ -30,7 +30,15 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        $request->session()->regenerate(); 
+        $usuario = Auth::user()->hasRol('Administrador');
+
         $request->session()->regenerate();
+
+        if($usuario){
+            return redirect()->route('reservas.index')->with('exito', '¡Ha iniciado sesion exitosamente!');
+        }
+        return redirect()->route('reservas.create')->with('exito', '¡Ha iniciado sesion exitosamente!');
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

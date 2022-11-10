@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 // Para eliminar el registro, pero solamente en la vista y no en la bd
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reserva extends Model
 {
-    use SoftDeletes;
+    use Hasfactory;
     protected $fillable = [
         'cedula', 
         'nombre', 

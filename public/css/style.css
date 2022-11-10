@@ -336,7 +336,7 @@ h1{
 }
 
 .mobile-nav-toggle.bi-x {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.041)(255, 255, 255, 0.041)(0, 0, 0, 0);
 }
 
 @media (max-width: 991px) {
@@ -351,12 +351,11 @@ h1{
 
 .navbar-mobile {
   position: fixed;
-  overflow: hidden;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgba(9, 9, 9, 0.9);
+  background: rgba(9, 9, 9, 0);
   transition: 0.3s;
   z-index: 999;
 }
@@ -364,7 +363,8 @@ h1{
 .navbar-mobile .mobile-nav-toggle {
   position: absolute;
   top: 15px;
-  right: 15px;
+  right: 10px;
+  margin-left: 15px;
 }
 
 .navbar-mobile ul {
@@ -376,7 +376,7 @@ h1{
   left: 15px;
   padding: 10px 0;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: rgba(3, 3, 3, 0.719);
   overflow-y: auto;
   transition: 0.3s;
 }
@@ -385,7 +385,7 @@ h1{
 .navbar-mobile a:focus {
   font-size: 15px;
   padding-right: 15px;
-  color: #222222;
+  color: #777777;
 }
 
 .navbar-mobile a:hover,
@@ -497,7 +497,7 @@ h1{
 @media (max-width: 992px) {
   #hero:before {
     content: "";
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(5, 5, 5, 0.185);
     position: absolute;
     bottom: 0;
     top: 0;

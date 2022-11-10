@@ -3,29 +3,22 @@
 @section('titulo', 'Reservas')
 
 @section('content')
+@can(['administrador'])
+<div class="mt-3 ms-5">
+    <a href="{{ route('reservas.create') }}" class="btn btn-secondary shadow">
+        Hacer una reserva.
+    </a>
+</div>
+@endcan
     @if($query)
         <div class="alert alert-warning" role="alert">
             <p>A continuación se presentan los resultados de la búsqueda: <span class="fw-bold">{{ $query }}</span></p>
         </div>
         
     @endif
-    @if($mensaje = Session::get('exito'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <p>{{ $mensaje }}</p>
-        <button type="button" class ="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
-    @can(['administrador'])
-    <div class="mt-3">
-        <a href="{{ route('reservas.create') }}" class="btn btn-secondary">
-            Hacer una reserva.
-        </a>
-        
-    </div>
-    @endcan
-    <div class="my-3">
+    <div class="my-3 px-5">
         @if(count($reservas) > 0)
-        <table class="table table-hover">
+        <table class="table table-hover border" style="">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -34,19 +27,19 @@
             </thead>
             <tbody>
                 @foreach($reservas as $item)
-                    <tr>
-                        <td>{{ $item->nombre }}</td>
-                        <td class="d-flex">
-                            <a href="{{ route('reservas.show', $item->id) }}" class="btn btn-outline-info justify-content-start me-1 rounded-circle"><i class="fa-solid fa-eye"></i></a>
-                            <a href="{{ route('reservas.edit', $item->id) }}" class="btn btn-outline-warning justify-content-start me-1 rounded-circle"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <!-- <a href="{{ route('reservas.destroy', $item->id) }}"  class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a> -->
-                            <form action="{{ route('reservas.destroy', $item->id) }}" method="post" class="justify-content-start form-delete">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger rounded-circle">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                            </form>
+                <tr class="">
+                    <td>{{ $item->nombre }}</td>
+                    <td class="d-flex">
+                        <a href="{{ route('reservas.show', $item->id) }}"
+                            class="btn btn-outline-primary me-3">Ver</a>
+                        <a href="{{ route('reservas.edit', $item->id) }}"
+                            class="btn btn-outline-warning me-3">Editar</a>
+                        <form action="{{ route('reservas.destroy', $item->id) }}" method="post"
+                            class="justify-content-start form-delete">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-danger me-3">Borrar</button>
+                        </form>
                         </td>
                     </tr>
                 @endforeach

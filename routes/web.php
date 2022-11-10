@@ -27,6 +27,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
+
 Route::resource('reservas', ReservaController::class)->middleware('auth');
 Route::resource('usuarios', UsuariosController::class)->middleware('auth');
 

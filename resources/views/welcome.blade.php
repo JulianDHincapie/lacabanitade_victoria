@@ -25,6 +25,7 @@
     <link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -48,47 +49,66 @@
             <!-- <a href="index.html" class="logo"><img src="img/logo.png" alt="" class="img-fluid"></a>-->
 
             <nav id="navbar" class="navbar order-last order-lg-0 ms-5">
+                <i class="bi bi-list mobile-nav-toggle"></i>
                 <ul>
                     <li><a class="active" href="#">Inicio</a></li>
                     <li><a href="#descripcion">Descripcion</a></li>
                     <li><a href="#ubicacion">Ubicacion</a></li>
                     @can(['administrador'])
-                        <li><a href="resume.html">Reservas</a></li>
-                        <li><a href="services.html">Usuarios</a></li>
+                        <li><a href="{{ route('reservas.index') }}">Reservas</a></li>
+                        <li><a href="{{ route('usuarios.index') }}">Usuarios</a></li>
                     @endcan
+                    @auth
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-user me-2"></i>{{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item text-dark" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                        Cerrar sesión
+                                        <form id="logout-form" action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                        </form>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endauth
+
                 </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
-            <div class="header-social-links">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <div class="header-social-links me-5">
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-            </div>
+                <div>
 
-        </div>
+                </div>
 
     </header><!-- End Header -->
 
     <!-- ======= Hero Section ======= -->
     <section id="hero" class="d-flex align-items-center">
-        <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
+        <div class="container d-flex flex-column align-items-center text-center" data-aos="zoom-in"
+            data-aos-delay="100">
             <h1>La Cabañita De Victoria</h1>
             <h2>Bienvenido al mejor estadia con el mejor servicio</h2>
-            <a href="{{ route('reservas.index') }}" class="btn-about shadow">Reserva aqui</a>
+            <a href="{{ route('reservas.create') }}" class="btn-about shadow">Reserva aqui</a>
         </div>
+
     </section><!-- End Hero -->
     <section class="content-section bg-light" id="descripcion">
         <div class="text-center p-5">
             <h1 class="mb-5">Descripcion</h1>
-            <div class="card shadow mb-5" style="width: 100%; height: 28rem;">
+            <div class="card shadow mb-5" style="width: 100%; ">
                 <div class="row g-0">
                     <div class="col-md-6">
-                        <img src="{{ asset('images/cabanita1.jpg') }}" class="img-fluid rounded-start" alt="">
+                        <img src="{{ asset('images/cabana1.jpg') }}" class="img-fluid rounded-start" alt="">
                     </div>
                     <div class="col-md-6">
-                        <h4 class="card-header card-title">La cabañita  de Victoria</h5>
+                        <h4 class="card-header card-title">La cabañita de Victoria</h5>
                             <div class="card-body">
                                 <p>La cabañita de Victoria les ofrece una muy buena estadia, lo mas acogido
                                     para tu comodidad, nos encontramos en el barrio el paien la
@@ -102,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card shadow mb-5" style="width: 100%; height: 28rem;">
+            <div class="card shadow mb-5" style="width: 100%;">
                 <div class="row g-0">
                     <div class="col-md-6 ">
                         <h4 class="card-header card-title">La cabañita de Victoria</h5>
@@ -114,17 +134,17 @@
                             </div>
                     </div>
                     <div class="col-md-6">
-                        <img src="{{ asset('images/cabanita2.jpg') }}" class="img-fluid rounded-start" alt="">
+                        <img src="{{ asset('images/cabana2.jpg') }}" class="img-fluid rounded-end" alt="">
                     </div>
                     <div class="card-footer shadow">
                         <p class="card-text"><small class="text-muted">Estadia Ibagué</small></p>
                     </div>
                 </div>
             </div>
-            <div class="card shadow mb-5" style="width:100%; height: 28rem;">
+            <div class="card shadow" style="width:100%; ">
                 <div class="row g-0">
                     <div class="col-md-6">
-                        <img src="{{ asset('images/cabanita3.jpg') }}" class="img-fluid rounded-start" alt="">
+                        <img src="{{ asset('images/cabana3.jpg') }}" class="img-fluid rounded-start" alt="">
                     </div>
                     <div class="col-md-6 ">
                         <h4 class="card-header card-title">La cabañita de Victoria</h5>
@@ -160,7 +180,7 @@
 
 
     <!-- ======= Footer ======= -->
-    <footer id="footer">
+    <footer id="footer" class="">
         <div class="container">
             <div class="copyright">
                 &copy; Contactanos a <strong><span>lacabañitavictoria@gmail.com</span></strong>. O
@@ -170,7 +190,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/ -->
-                Al número <a href="https://bootstrapmade.com/">3153040730</a>
+                Al número <a href="#">3153040730</a>
             </div>
         </div>
     </footer><!-- End  Footer -->

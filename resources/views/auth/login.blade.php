@@ -1,62 +1,79 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/assets/logo-vt.svg" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ asset('css/styless.css') }}">
+</head>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+<form method="POST" action="{{ route('login') }}">
+    @csrf
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="mt-4">
-                ¿No esta registrado?
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
-                    {{ __('¡Registrese!') }}
-                </a>
-            </div>
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                    @endif
+    <body class="fondo d-flex justify-content-center align-items-center vh-100">
+        <div class="color p-5 rounded-5 text-secondary shadow" style="width: 25rem">
+            <div class="text-center colorr fs-1 fw-bold">Login</div>
+            @if ($mensaje = Session::get('exito'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <p>{{ $mensaje }}</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
                     
-                    <x-button class="ml-3">
-                        {{ __('Log in') }}
-                    </x-button>
+                        <li class="alert alert-danger">
+                            {{ $error }}
+                        </li>
+                    
+                @endforeach
+            @endif
+
+            <div class="input-group mt-4">
+                <input id="email" class="form-control w-100 " type="email" placeholder="Email" name="email"
+                    :value="old('email')" required autofocus>
             </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+            <div class="input-group mt-1">
+                <input id="password" class="form-control w-100" type="password" placeholder="Contraseña"
+                    name="password" required autocomplete="current-password" />
+
+            </div>
+            <div class="d-flex justify-content-around mt-1">
+                <div class="d-flex align-items-center gap-1">
+                    <input class="form-check-input" type="checkbox" />
+                    <div class="pt-1" style="font-size: 0.9rem">{{ __('Remember me') }}</div>
+                </div>
+                <div class="pt-1">
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="text-decoration-none colorr fw-semibold"
+                            style="font-size: 0.9rem">{{ __('Forgot your password?') }}</a>
+                    @endif
+                </div>
+            </div>
+            <div class="">
+                <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">
+                    {{ __('Log in') }}
+                </button>
+                <div class="d-flex gap-1 justify-content-center mt-1">
+                    <div>¿no tienes una cuenta</div>
+                    <a href="{{ route('register') }}"
+                        class="text-decoration-none colorr fw-semibold">{{ __('¡Registrese!') }}</a>
+                </div>
+                <div class="p-3">
+                    <div class="border-bottom text-center" style="height: 0.9rem">
+                        <span class="bg-white px-3">O</span>
+                    </div>
+                </div>
+                <div class="btn d-flex gap-2 justify-content-center border mt-3 shadow-sm">
+                    <div class="fw-semibold text-secondary">Continua con Google</div>
+                </div>
+            </div>
+    </body>
+</form>
+
+</html>

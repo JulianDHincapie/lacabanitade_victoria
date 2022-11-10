@@ -1,58 +1,110 @@
 @extends('layouts.main')
 
-@section('titulo', 'Nueva reserva')
+@section('titulo', 'Hacer reserva')
 
 @section('content')
+    {{-- @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif --}}
     <form action="{{ route('reservas.store') }}" method="post" class="needs-validation" novalidate>
-        @csrf 
-        <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="cedula" name="cedula" placeholder="cedula" required>
-            <label for="cedula">Cedula</label>
+        @csrf
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control @error('cedula') is-invalid @enderror" id="cedula" name="cedula" placeholder="cedula"
+                    value="{{ old('cedula') }}">
+                <label for="cedula">Cedula</label>
+                @error('cedula')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                {{-- @if ($errors->has('cedula'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('cedula') }}</strong>
+                    </span>
+                @endif --}}
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" placeholder="nombre"
+                    value="{{ old('nombre') }}">
+                <label for="nombre">Nombre</label>
+                @error('nombre')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control @error('apellido') is-invalid @enderror" id="apellido" name="apellido" placeholder="apellido"
+                    value="{{ old('apellido') }}">
+                <label for="apellido">Apellido</label>
+                @error('apellido')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="nombre" required>
-            <label for="nombre">Nombre</label>
+        <div class="col-sm-6">
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control @error('telefono') is-invalid @enderror" id="telefono" name="telefono" placeholder="telefono"
+                    value="{{ old('telefono') }}">
+                <label for="telefono">Telefono</label>
+                @error('telefono')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control @error('fecha_entrada') is-invalid @enderror" id="fecha_entrada" name="fecha_entrada" placeholder="fecha_entrada"
+                    value="{{ old('fecha_entrada') }}">
+                <label for="fecha_entrada">Fecha entrada</label>
+                @error('fecha_entrada')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control @error('fecha_salida') is-invalid @enderror" id="fecha_salida" name="fecha_salida" placeholder="fecha_salida"
+                    value="{{ old('fecha_salida') }}">
+                <label for="fecha_salida">Fecha salida</label>
+                @error('fecha_salida')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="apellido" required>
-            <label for="apellido">Apellido</label>
+    </div>
+    <div class="row">
+        <div class="col-sm-3 mt-2">
+            <button class="btn btn-danger w-100" href="/">Cancelar</button>
         </div>
-        <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="telefono" name="telefono" placeholder="telefono" required>
-            <label for="telefono">Telefono</label>
+        <div class="col-sm-9 mt-2">
+            <button type="submit" class="btn btn-outline-dark w-100">Confirmar</button>
         </div>
-        <div class="form-floating mb-3">
-            <input type="date" class="form-control" id="fecha_entrada" name="fecha_entrada" placeholder="fecha_entrada" required>
-            <label for="fecha_entrada">Fecha entrada</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="date" class="form-control" id="fecha_salida" name="fecha_salida" placeholder="fecha_salida" required>
-            <label for="fecha_salida">Fecha salida</label>
-        </div>
-        <button type="submit" class="btn btn-outline-secondary">Confirmar</button>
+    </div>
+        
+        
     </form>
 @endsection
 
 @section('scripts')
     <script>
         (() => {
-        'use strict'
+            'use strict'
 
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             const forms = document.querySelectorAll('.needs-validation')
 
             // Loop over them and prevent submission
             Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-                }
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
 
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
-
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
     </script>
 @endsection

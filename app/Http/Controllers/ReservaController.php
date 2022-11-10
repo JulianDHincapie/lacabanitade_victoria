@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reserva;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Gate;
 
 class ReservaController extends Controller
@@ -23,15 +26,16 @@ class ReservaController extends Controller
         {
             $query = $request->buscar;
             $reservas = Reserva::where('nombre', 'LIKE', '%' . $query . '%')
-                                    ->orderBy('nombre', 'asc')->paginate(5); 
+                                    ->orderBy('nombre', 'asc')->paginate(2); 
             return view('reservas.index', compact('reservas', 'query'));
 
         }
         // Obtener todos los registros
-        $reservas = Reserva::orderBy('nombre', 'asc')->paginate(5); 
+        $reservas = Reserva::orderBy('nombre', 'asc')->paginate(2); 
 
         // Envíar a la vista
-        return view('reservas.index', compact('reservas'));
+        return view('welcome','reservas.insert', compact('reservas'));
+        
 
     }
 
@@ -48,6 +52,7 @@ class ReservaController extends Controller
         //     // abort(403);
         //     return redirect()->route('reservas.index');
         // }
+
         return view('reservas.insert');
     }
 
@@ -60,16 +65,44 @@ class ReservaController extends Controller
     public function store(Request $request)
     {
         // echo $request;
-        $cedula = $request->cedula;
-        $nombre = $request->nombre;
-        $apellido = $request->apellido;
-        $telefono = $request->telefono;
-        $fecha_entrada = $request->fecha_entrada;
-        $fecha_salida = $request->fecha_salida;
+        // $cedula = $request->cedula;
+        // $nombre = $request->nombre;
+        // $apellido = $request->apellido;
+        // $telefono = $request->telefono;
+        // $fecha_entrada = $request->fecha_entrada([
+        //     'fecha_entrada' => 'required|unique:posts|max:255']);
+        // $fecha_salida = $request->fecha_salida;
+        $validated = $request->validate([
+
+            'cedula' => 'required',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'telefono' => 'required',
+            'fecha_entrada' => 'required|unique:reservas|max:255',
+            'fecha_salida' => 'required|unique:reservas|max:255'
+        ]);
+
+            $reserva = new Reserva;
+
+            $cedula = $request->cedula;
+            $nombre = $request->nombre;
+            $apellido = $request->apellido;
+            $telefono = $request->telefono;
+            $fecha_entrada = $request->fecha_entrada;
+            $fecha_salida = $request->fecha_salida;
+
 
         Reserva::create($request->all());
 
-        return redirect()->route('reservas.index')->with('exito','¡El registro se ha creado satisfactoriamente!');
+        $usuario = Auth::user()->hasRol('Administrador');
+
+        $request->session()->regenerate();
+
+        if($usuario){
+            return redirect()->route('reservas.index')->with('exito', '¡El registro se ha creado satisfactoriamente!');
+        }
+        return redirect()->route('reservas.create')->with('exito', '¡El registro se ha creado satisfactoriamente!');
+
 
     }
 

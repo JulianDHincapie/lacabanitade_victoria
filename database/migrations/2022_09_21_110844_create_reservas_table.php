@@ -19,7 +19,7 @@ class CreateReservasTable extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->string('telefono');
-            $table->date('fecha_entrada');
+            $table->date('fecha_entrada')->unique();
             $table->date('fecha_salida');
             $table->timestamps();
             $table->softDeletes();

@@ -177,7 +177,7 @@ h6 {
   color: #6f7180;
 }
 
-.nav-menu a:hover,
+/* .nav-menu a:hover,
 .nav-menu .active,
 .nav-menu .active:focus,
 .nav-menu li:hover>a {
@@ -190,7 +190,7 @@ h6 {
 .nav-menu .active:focus i,
 .nav-menu li:hover>a i {
   color: #149ddd;
-}
+} */
 
 /* Mobile Navigation */
 .mobile-nav-toggle {
@@ -214,13 +214,13 @@ h6 {
   cursor: pointer;
 }
 
-.mobile-nav-active {
+/* .mobile-nav-active {
   overflow: hidden;
 }
 
 .mobile-nav-active #header {
   left: 0;
-}
+} */
 
 /*--------------------------------------------------------------
 # Hero Section
